@@ -67,12 +67,12 @@ RUN apt-get -y update && \
 RUN pip3 install wheel && pip3 install xmltodict homeassistant sqlalchemy netdisco aiohttp_cors bluepy
 
 # Override homeassistant source code
-RUN rm -r /usr/local/lib/python3.5/dist-packages/homeassistant/components
+RUN rm -r /usr/local/lib/python3.5/dist-packages/homeassistant
 
 # Switch on cutecare-platform branch and run Home Assistant
 CMD rm -r -f /config/home-assistant && \
    git clone -b cutecare-platform https://github.com/cutecare/home-assistant.git /config/home-assistant && \
-   ln -s /config/home-assistant/homeassistant/components /usr/local/lib/python3.5/dist-packages/homeassistant/components && \
+   ln -s /config/home-assistant/homeassistant /usr/local/lib/python3.5/dist-packages/homeassistant && \
    python3 -m homeassistant --config=/config
 
 _EOF_
