@@ -1,8 +1,8 @@
 #!/bin/bash
 
 HA_LATEST=false
-DOCKER_IMAGE_NAME="cutecare/rpi-home-assistant"
-RASPIAN_RELEASE="stretch"
+DOCKER_IMAGE_NAME="cutecare/opi-home-assistant"
+RASPIAN_RELEASE="latest"
 
 log() {
    now=$(date +"%Y%m%d-%H%M%S")
@@ -39,11 +39,11 @@ fi
 ## Generate the Dockerfile
 ## #####################################################################
 cat << _EOF_ > Dockerfile
-FROM resin/rpi-raspbian:$RASPIAN_RELEASE
+FROM arm64v8/ubuntu:$RASPIAN_RELEASE
 MAINTAINER Evgeny Savitsky <evgeny.savitsky@gmail.com>
 
 # Base layer
-ENV ARCH=arm
+ENV ARCH=arm64
 ENV CROSS_COMPILE=/usr/bin/
 
 # Install required packages
@@ -82,7 +82,7 @@ _EOF_
 ## #####################################################################
 log "Building $DOCKER_IMAGE_NAME:$HA_VERSION"
 ## Force-pull the base image
-docker pull resin/rpi-raspbian:$RASPIAN_RELEASE
+docker pull arm64v8/ubuntu:$RASPIAN_RELEASE
 docker build -t $DOCKER_IMAGE_NAME:$HA_VERSION .
 
 log "Pushing $DOCKER_IMAGE_NAME:$HA_VERSION"
