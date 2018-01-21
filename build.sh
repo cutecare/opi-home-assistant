@@ -60,8 +60,7 @@ RUN apt-get -y update && \
 # Mouting point for the user's configuration
 VOLUME /config
 
-RUN ln -s /usr/lib/arm-linux-gnueabihf/libboost_python-py35.so /usr/lib/arm-linux-gnueabihf/libboost_python-py34.so && \
-   apt-get update && apt-get -y install git cron pkg-config libboost-python-dev libboost-thread-dev libbluetooth-dev libglib2.0-dev python-dev
+RUN apt-get -y install git cron pkg-config libboost-python-dev libboost-thread-dev libbluetooth-dev libglib2.0-dev python-dev
 
 # Install Python modules
 RUN pip3 install wheel && pip3 install xmltodict homeassistant sqlalchemy netdisco aiohttp_cors bluepy
