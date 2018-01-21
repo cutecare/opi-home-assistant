@@ -47,8 +47,8 @@ ENV ARCH=arm64
 ENV CROSS_COMPILE=/usr/bin/
 
 # Install required packages
-RUN apt-get update && \
-    apt-get install --no-install-recommends \
+RUN apt-get -y update && \
+    apt-get -y install --no-install-recommends \
       apt-utils build-essential python3-dev python3-pip python3-setuptools \
       libffi-dev libpython-dev libssl-dev \
       libudev-dev bluetooth bluez-hcidump \
