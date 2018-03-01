@@ -67,7 +67,8 @@ RUN apt-get -y update && \
 RUN pip3 install wheel && pip3 install xmltodict bluepy homeassistant netdisco sqlalchemy home-assistant-frontend psutil
 
 # Install wcode web-editor
-RUN curl -sL https://deb.nodesource.com/setup_9.x | bash - && \
+RUN apt-get -y install curl && \
+   curl -sL https://deb.nodesource.com/setup_9.x | bash - && \
    apt-get -y install nodejs && \
    git clone -b cutecare https://github.com/cutecare/wcode.git /home/wcode && \
    npm install --prefix /home/wcode nodejs express
