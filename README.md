@@ -69,13 +69,29 @@ hci0:   Type: BR/EDR  Bus: UART
         TX bytes:1750 acl:0 sco:0 commands:44 errors:0
 ```
 
-### Просмотр логов Home Assistant
+## Просмотр логов Home Assistant
 
 ```
 sudo docker logs hass
 ```
 
-### Выполнение команд в образе Home Assistant
+Чтобы логи не съедали все место на диске необходимо ограничить их размер.
+Сделать это можно следующим образом:
+
+```
+cat > /etc/docker/daemon.json << EOF
+{
+    "log-driver": "json-file",
+    "log-opts": {
+        "max-size": "2m",
+        "max-file": "5"
+    }
+}
+EOF
+service docker restart
+```
+
+## Выполнение команд в образе Home Assistant
 
 ```
 sudo docker exec hass echo 'hello from hass image'
