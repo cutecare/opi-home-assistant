@@ -76,13 +76,14 @@ RUN apt-get -y install curl && \
 # Override homeassistant source code
 RUN rm -r /usr/local/lib/python3.5/dist-packages/homeassistant
 
-# Switch on cutecare-platform branch and run Home Assistant
-CMD ([ -f /config/configuration.yaml ] && echo "Skip default config" || git clone https://github.com/cutecare/hass-cutecare-config.git /config) && \
-   rm -r -f /config/home-assistant && \
+# Switch on cutecare-platform branch
+RUN git clone https://github.com/cutecare/hass-cutecare-config.git /config && \
    git clone -b cutecare-platform https://github.com/cutecare/home-assistant.git /config/home-assistant && \
    (pip3 install -r /config/home-assistant/homeassistant/package_constraints.txt 2> /dev/null || true) && \
-   ln -s /config/home-assistant/homeassistant /usr/local/lib/python3.5/dist-packages/homeassistant && \
-   (nohup npm start --prefix /home/wcode -- --headless --port 8080 /config > /config/wcode.log &) && \
+   ln -s /config/home-assistant/homeassistant /usr/local/lib/python3.5/dist-packages/homeassistant
+
+# Run Home Assistant
+CMD (nohup npm start --prefix /home/wcode -- --headless --port 8080 /config > /config/wcode.log &) && \
    python3 -m homeassistant --config=/config
 
 _EOF_
