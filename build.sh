@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HA_LATEST=false
+HA_VERSION="0.60"
 DOCKER_IMAGE_NAME="cutecare/opi-home-assistant"
 RASPIAN_RELEASE="latest"
 
@@ -10,30 +10,6 @@ log() {
 }
 
 log ">>--------------------->>"
-
-## #####################################################################
-## Home Assistant version
-## #####################################################################
-if [ "$1" != "" ]; then
-   # Provided as an argument
-   HA_VERSION=$1
-   log "Docker image with Home Assistant $HA_VERSION"
-else
-   _HA_VERSION="$(cat /var/log/home-assistant/docker-build.version)"
-   HA_VERSION="$(curl 'https://pypi.python.org/pypi/homeassistant/json' | jq '.info.version' | tr -d '"')"
-   HA_LATEST=true
-   log "Docker image with Home Assistant 'latest' (version $HA_VERSION)"
-fi
-
-## #####################################################################
-## For hourly (not parameterized) builds (crontab)
-## Do nothing: we're trying to build & push the same version again
-## #####################################################################
-if [ "$HA_LATEST" == true ] && [ "$HA_VERSION" == "$_HA_VERSION" ]; then
-   log "Docker image with Home Assistant $HA_VERSION has already been built & pushed"
-   log ">>--------------------->>"
-   exit 0
-fi
 
 ## #####################################################################
 ## Generate the Dockerfile
@@ -98,13 +74,5 @@ docker build -t $DOCKER_IMAGE_NAME:$HA_VERSION .
 
 log "Pushing $DOCKER_IMAGE_NAME:$HA_VERSION"
 docker push $DOCKER_IMAGE_NAME:$HA_VERSION
-
-if [ "$HA_LATEST" = true ]; then
-   log "Tagging $DOCKER_IMAGE_NAME:$HA_VERSION with latest"
-   docker tag $DOCKER_IMAGE_NAME:$HA_VERSION $DOCKER_IMAGE_NAME:latest
-   log "Pushing $DOCKER_IMAGE_NAME:latest"
-   docker push $DOCKER_IMAGE_NAME:latest
-   echo $HA_VERSION > /var/log/home-assistant/docker-build.version
-fi
 
 log ">>--------------------->>"
