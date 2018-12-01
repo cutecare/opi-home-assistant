@@ -56,14 +56,14 @@ RUN (rm -fr /usr/local/lib/python3.6/dist-packages/homeassistant || true) && \
    (rm -fr /usr/local/lib/python3.5/dist-packages/homeassistant || true)
 
 # Switch on cutecare-platform branch
-RUN git clone https://github.com/cutecare/hass-cutecare-config.git /config && \
-   git clone -b cutecare-platform https://github.com/cutecare/home-assistant.git /config/home-assistant && \
-   (pip3 install -r /config/home-assistant/homeassistant/package_constraints.txt 2> /dev/null || true)
+RUN git clone -b cutecare-platform https://github.com/cutecare/home-assistant.git /home/home-assistant && \
+   (pip3 install -r /home/home-assistant/homeassistant/package_constraints.txt 2> /dev/null || true)
 
-RUN ln -s /config/home-assistant/homeassistant /usr/local/lib/python3.6/dist-packages/homeassistant
+RUN ln -s /home/home-assistant/homeassistant /usr/local/lib/python3.6/dist-packages/homeassistant
 
 # Run Home Assistant
-CMD (nohup npm start --prefix /home/wcode -- --headless --port 8080 /config > /config/wcode.log &) && \
+CMD ([ -f /config/configuration.yaml ] && echo "Skip default config" || git clone https://github.com/cutecare/hass-cutecare-config.git /config) && \
+   (nohup npm start --prefix /home/wcode -- --headless --port 8080 /config > /config/wcode.log &) && \
    python3 -m homeassistant --config=/config
 
 _EOF_
