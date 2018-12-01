@@ -52,7 +52,7 @@ RUN git clone -b cutecare https://github.com/cutecare/wcode.git /home/wcode && \
    npm install --prefix /home/wcode nodejs express
 
 # Override homeassistant source code
-RUN rm -r /usr/local/lib/python3.5/dist-packages/homeassistant
+RUN (rm -fr /usr/local/lib/python3.5/dist-packages/homeassistant || true)
 
 # Switch on cutecare-platform branch
 RUN git clone https://github.com/cutecare/hass-cutecare-config.git /config && \
