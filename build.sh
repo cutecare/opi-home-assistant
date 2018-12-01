@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HA_VERSION="0.60"
+HA_VERSION="latest"
 DOCKER_IMAGE_NAME="cutecare/opi-home-assistant"
 RASPIAN_RELEASE="latest"
 
