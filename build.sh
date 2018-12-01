@@ -42,13 +42,15 @@ RUN apt-get -y update && \
 # Install Python modules
 RUN pip3 install wheel && pip3 install xmltodict bluepy homeassistant netdisco sqlalchemy home-assistant-frontend psutil
 
-# Install wcode web-editor
+# Install nodejs
 RUN apt-get -y install curl gnupg gnupg2 && \
-   curl -sL https://deb.nodesource.com/setup_9.x | bash - && \
-   apt-get -y install nodejs && \
-   git clone -b cutecare https://github.com/cutecare/wcode.git /home/wcode && \
+   curl -sL https://deb.nodesource.com/setup_11.x | bash - && \
+   apt-get -y install nodejs
+
+# Install wcode web-editor
+RUN git clone -b cutecare https://github.com/cutecare/wcode.git /home/wcode && \
    npm install --prefix /home/wcode nodejs express
-   
+
 # Override homeassistant source code
 RUN rm -r /usr/local/lib/python3.5/dist-packages/homeassistant
 
