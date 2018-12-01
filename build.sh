@@ -56,7 +56,7 @@ RUN (rm -fr /usr/local/lib/python3.6/dist-packages/homeassistant || true) && \
    (rm -fr /usr/local/lib/python3.5/dist-packages/homeassistant || true)
 
 # Switch on cutecare-platform branch
-RUN git clone -b cutecare-platform https://github.com/cutecare/home-assistant.git /home/home-assistant && \
+RUN git clone -b cutecare-platform https://github.com/cutecare/home-assistant.git /home/home-assistant  && \
    (pip3 install -r /home/home-assistant/homeassistant/package_constraints.txt 2> /dev/null || true)
 
 RUN ln -s /home/home-assistant/homeassistant /usr/local/lib/python3.6/dist-packages/homeassistant
