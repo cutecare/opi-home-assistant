@@ -59,7 +59,7 @@ RUN (rm -fr /usr/local/lib/python3.6/dist-packages/homeassistant || true) && \
 RUN git clone -b cutecare-platform https://github.com/cutecare/home-assistant.git /home/home-assistant  && \
    (pip3 install -r /home/home-assistant/homeassistant/package_constraints.txt 2> /dev/null || true)
 
-RUN ln -s /home/home-assistant/homeassistant /usr/local/lib/python3.5/dist-packages/homeassistant
+RUN ln -s /home/home-assistant/homeassistant /usr/local/lib/python3.6/dist-packages/homeassistant
 
 # Run Home Assistant
 CMD ([ -f /config/configuration.yaml ] && echo "Skip default config" || git clone https://github.com/cutecare/hass-cutecare-config.git /config) && \
