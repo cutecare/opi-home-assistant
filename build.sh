@@ -28,7 +28,7 @@ RUN apt-get -y update && \
       apt-utils build-essential python3-dev python3-pip python3-setuptools \
       libffi-dev libpython-dev libssl-dev \
       libudev-dev bluetooth bluez-hcidump \
-      net-tools rfkill nmap iputils-ping \
+      net-tools rfkill nmap iputils-ping ffmpeg \
       ssh && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
