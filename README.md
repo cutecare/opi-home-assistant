@@ -8,7 +8,7 @@
 
 ```
 sudo -s
-curl -sSL https://get.docker.com | sh
+apt-get -y update && apt-get -y install docker.io=18.06.1-0ubuntu1~18.04.1
 mkdir /home/home-assistant
 docker run -d --name hass --restart unless-stopped -p 80:8123 -p 8080:8080 --cap-add=SYS_ADMIN --cap-add=NET_ADMIN --net=host -v /home/home-assistant:/config -v /dev:/dev -v /etc/localtime:/etc/localtime:ro cutecare/opi-home-assistant:latest
 ```
